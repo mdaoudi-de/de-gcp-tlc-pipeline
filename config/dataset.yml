@@ -1,0 +1,13 @@
+dataset:
+  name: nyc_tlc_green_taxi
+  description: "NYC TLC Green Taxi trip records (monthly parquet) + taxi zone lookup (csv)"
+  source:
+    base_url: "https://d37ci6vzurychx.cloudfront.net"
+    trips_path_template: "trip-data/green_tripdata_{yyyy}-{mm}.parquet"
+    zones_path: "misc/taxi_zone_lookup.csv"
+  default_range:
+    months_back: 3  # on commencera par 3 mois pour V1 (rapide, crédible)
+raw_conventions:
+  gcs_prefix: "raw/green_taxi"
+  partition_key: "ingestion_date"
+  file_naming: "{dataset}/{ingestion_date}/{filename}"
