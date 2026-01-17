@@ -19,7 +19,7 @@ def test_trip_url_format():
 
 def test_months_back():
     months = month_start_n_months_back(date(2024, 1, 15), 3)
-    assert months == [(2024, 1), (2023, 12), (2023, 11)]
+    assert months == [(2023, 12), (2023, 11), (2023, 10)]
 
 
 def test_months_back_invalid():

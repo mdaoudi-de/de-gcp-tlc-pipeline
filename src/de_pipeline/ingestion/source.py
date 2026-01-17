@@ -21,11 +21,15 @@ class TLCSources:
 
 
 def month_start_n_months_back(today: date, months_back: int) -> list[tuple[int, int]]:
-    """Return list of (year, month) for the last N months including current month."""
+    """Return list of (year, month) for the last N months, excluding current month."""
     if months_back <= 0:
         raise ValueError("months_back must be > 0")
 
-    y, m = today.year, today.month
+    y, m = today.year, today.month - 1  # Start from last month to avoid future data
+    if m == 0:
+        m = 12
+        y -= 1
+    
     res: list[tuple[int, int]] = []
     for _ in range(months_back):
         res.append((y, m))

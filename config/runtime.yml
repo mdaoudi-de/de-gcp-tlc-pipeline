@@ -1,0 +1,5 @@
+runtime:
+  local_raw_dir: "data/raw"
+  ingestion_date_format: "%Y-%m-%d"
+  request_timeout_sec: 60
+  chunk_size_bytes: 1048576  # 1 MB
