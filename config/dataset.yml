@@ -8,6 +8,6 @@ dataset:
   default_range:
     months_back: 3  # on commencera par 3 mois pour V1 (rapide, crédible)
 raw_conventions:
+  local_prefix: "green_taxi"
   gcs_prefix: "raw/green_taxi"
   partition_key: "ingestion_date"
-  file_naming: "{dataset}/{ingestion_date}/{filename}"

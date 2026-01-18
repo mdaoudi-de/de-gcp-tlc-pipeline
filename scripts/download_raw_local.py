@@ -17,7 +17,7 @@ def main() -> None:
 
     src_cfg = dataset_cfg["dataset"]["source"]
     months_back = int(dataset_cfg["dataset"]["default_range"]["months_back"])
-    raw_prefix = dataset_cfg["raw_conventions"]["gcs_prefix"]  # reuse naming convention
+    local_prefix = dataset_cfg["raw_conventions"]["local_prefix"]
     local_raw_dir = Path(runtime_cfg["runtime"]["local_raw_dir"])
     timeout_sec = int(runtime_cfg["runtime"]["request_timeout_sec"])
     chunk_size = int(runtime_cfg["runtime"]["chunk_size_bytes"])
@@ -32,14 +32,14 @@ def main() -> None:
 
     # 1) zones lookup (small csv)
     zones_url = src.zones_url()
-    zones_dest = local_raw_dir / raw_prefix / f"ingestion_date={ingestion_date}" / "taxi_zone_lookup.csv"
+    zones_dest = local_raw_dir / local_prefix / f"ingestion_date={ingestion_date}" / "taxi_zone_lookup.csv"
     download_file(zones_url, zones_dest, timeout_sec=timeout_sec, chunk_size=chunk_size)
 
     # 2) trips parquet (monthly)
     for y, m in month_start_n_months_back(date.today(), months_back):
         url = src.trip_url(y, m)
         filename = f"green_tripdata_{y:04d}-{m:02d}.parquet"
-        dest = local_raw_dir / raw_prefix / f"ingestion_date={ingestion_date}" / filename
+        dest = local_raw_dir / local_prefix / f"ingestion_date={ingestion_date}" / filename
         try:
             download_file(url, dest, timeout_sec=timeout_sec, chunk_size=chunk_size)
         except Exception as e:
